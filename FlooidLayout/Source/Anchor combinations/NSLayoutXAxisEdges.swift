@@ -23,5 +23,5 @@ extension UIView: LayoutXAxisEdgesProvider {}
 extension UILayoutGuide: LayoutXAxisEdgesProvider {}
 
 public extension LayoutXAxisEdgesProvider {
-    var horizontalEdgesAnchor: NSLayoutXAxisEdges { .init(leadingAxisAnchor: self.leadingAnchor, trailingAxisAnchor: self.trailingAnchor) }
+    var horizontalEdgesAnchor: NSLayoutXAxisEdges { return .init(leadingAxisAnchor: self.leadingAnchor, trailingAxisAnchor: self.trailingAnchor) }
 }

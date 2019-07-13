@@ -1,6 +1,6 @@
 # FlooidLayout
 
-FloodLayout is an autolayout DSL, which helps you write a more intuitive and expressive code, by using custom operators and the new Swift 5.1 function builders. For example, the following standard autolayout code:
+FloodLayout is an autolayout DSL, which helps you write a more intuitive and expressive code, by using custom operators. For example, the following standard autolayout code:
 
 ```swift
 NSLayoutConstraint.activate([
@@ -14,11 +14,11 @@ NSLayoutConstraint.activate([
 could be written as:
 
 ```swift
-image.constraints {
-    $0.centerXAnchor == container.centerXAnchor
-    $0.topAnchor == container.topAnchor + 20
-    $0.widthAnchor == container.widthAnchor -- 20
-    $0.heightAnchor == $0.widthAnchor * 0.6
+image.constraints { $0
+    --| $1.centerXAnchor == container.centerXAnchor
+    --| $1.topAnchor == container.topAnchor + 20
+    --| $1.widthAnchor == container.widthAnchor -- 20
+    --| $1.heightAnchor == $0.widthAnchor * 0.6
 }
 ```
 ## Installation
@@ -28,7 +28,7 @@ image.constraints {
 Add the following line to your Podfile:
 
 ```
-pod 'FlooidLayout', '~> 1.0.2'
+pod 'FlooidLayout', '~> 1.0.2.preXcode11'
 ```
 
 ### Swift Package Manager
@@ -36,7 +36,7 @@ pod 'FlooidLayout', '~> 1.0.2'
 Add the following dependency to your Package.swift (or use the url and version rule below when integrating via Xcode 11):
 
 ```
-.package(url: "https://github.com/martin-lalev/FlooidLayout.git", .upToNextMajor(from: "1.0.2"))
+.package(url: "https://github.com/martin-lalev/FlooidLayout.git", .upToNextMajor(from: "1.0.2.preXcode11"))
 ```
 
 ## How it works
@@ -53,13 +53,13 @@ FlooidLayout allows you to perform inline changes on some of the constraint prop
 #### Assigning custom priority
 
 ```swift
-$0.heightAnchor == $0.widthAnchor * 0.6 --! .priority(.defaultHigh)
+--| $1.heightAnchor == $1.widthAnchor * 0.6 --! .priority(.defaultHigh)
 ```
 
 #### Assigning an identifier
 
 ```swift
-$0.centerXAnchor == container.centerXAnchor --! .identifier("iconCenterX")
+--| $1.centerXAnchor == container.centerXAnchor --! .identifier("iconCenterX")
 ```
 
 #### Activation
@@ -72,7 +72,7 @@ icon.centerXAnchor == container.centerXAnchor --! .activated
 #### Store in a vairable
 
 ```swift
-$0.topAnchor == container.topAnchor + 20 --> imageTopConstraint
+--| $1.topAnchor == container.topAnchor + 20 --> imageTopConstraint
 ```
 
 #### Chaining
@@ -80,7 +80,7 @@ $0.topAnchor == container.topAnchor + 20 --> imageTopConstraint
 All of the above can be chained together with the only restriction being that the assignment should be at the end of the declaration:
 
 ```swift
-$0.heightAnchor == $0.widthAnchor * 0.6 --! .priority(.defaultHigh) --! .identifier("iconHeight") --> iconHeightConstraint
+--| $1.heightAnchor == $1.widthAnchor * 0.6 --! .priority(.defaultHigh) --! .identifier("iconHeight") --> iconHeightConstraint
 ```
 
 ## Additional anchors
@@ -93,28 +93,28 @@ Modifies both the width and height anchors
 
 ```swift
 // Constant assignment
-$0.sizeAnchor == CGSize(width: 30, height: 30)
+--| $1.sizeAnchor == CGSize(width: 30, height: 30)
 
 // Another sizeAnchor assignment
-$0.sizeAnchor == container.sizeAnchor
+--| $1.sizeAnchor == container.sizeAnchor
 
 // Expanding both dimensions
-$0.sizeAnchor == container.sizeAnchor + 20
+--| $1.sizeAnchor == container.sizeAnchor + 20
 
 // Shrinking both dimensions (the constant is multipled by two in this example)
-$0.sizeAnchor == container.sizeAnchor -- 20
+--| $1.sizeAnchor == container.sizeAnchor -- 20
 
 // Scaling both dimensions
-$0.sizeAnchor == container.sizeAnchor * 0.5
+--| $1.sizeAnchor == container.sizeAnchor * 0.5
 
 // Expanding each dimensions separately
-$0.sizeAnchor == container.sizeAnchor + (width: 20, height: 40)
+--| $1.sizeAnchor == container.sizeAnchor + (width: 20, height: 40)
 
 // Shrinking each dimensions separately (the constants are multipled by two in this example)
-$0.sizeAnchor == container.sizeAnchor -- (width: 20, height: 10)
+--| $1.sizeAnchor == container.sizeAnchor -- (width: 20, height: 10)
 
 // Scaling each dimensions separately
-$0.sizeAnchor == container.sizeAnchor * (width: 0.5, height: 0.4)
+--| $1.sizeAnchor == container.sizeAnchor * (width: 0.5, height: 0.4)
 ```
 
 #### `centerAnchor`
@@ -124,13 +124,13 @@ Modifies both the centerX centerY anchors. Similarly other location anchors are 
 ```swift
 
 // Another locationAnchor assignment
-$0.centerAnchor == container.centerAnchor
+--| $1.centerAnchor == container.centerAnchor
 
 // Moving both axis
-$0.leadingTopAnchor == icon.leadingTopAnchor + 20
+--| $1.leadingTopAnchor == icon.leadingTopAnchor + 20
 
 // Moving each axis separately
-$0.leadingCenterAnchor == siblingView.trailingCenterAnchor + (x: 10, y: 0)
+--| $1.leadingCenterAnchor == siblingView.trailingCenterAnchor + (x: 10, y: 0)
 ```
 
 #### `edgesAnchor`
@@ -140,16 +140,16 @@ Modifies the top, bottom, leading and trailing anchors
 ```swift
 
 // Another locationAnchor assignment
-$0.edgesAnchor == container.edgesAnchor
+--| $1.edgesAnchor == container.edgesAnchor
 
 // Insetting all edges equally
-$0.edgesAnchor == container.edgesAnchor -- 10
+--| $1.edgesAnchor == container.edgesAnchor -- 10
 
 // Insetting edges separately per axis
-$0.edgesAnchor == container.edgesAnchor -- (horizontally: 20, vertically: 10)
+--| $1.edgesAnchor == container.edgesAnchor -- (horizontally: 20, vertically: 10)
 
 // Insetting each edge separately
-$0.edgesAnchor == container.edgesAnchor -- (leading: 5, trailing: 15, top: 10, bottom: 20)
+--| $1.edgesAnchor == container.edgesAnchor -- (leading: 5, trailing: 15, top: 10, bottom: 20)
 ```
 
 #### `horizontalEdgesAnchor`
@@ -159,13 +159,13 @@ Modifies both the leading and trailing anchors
 ```swift
 
 // Another horizontalEdgesAnchor assignment
-$0.horizontalEdgesAnchor == container.horizontalEdgesAnchor
+--| $1.horizontalEdgesAnchor == container.horizontalEdgesAnchor
 
 // Insetting both edges equally
-$0.horizontalEdgesAnchor == container.horizontalEdgesAnchor -- 10
+--| $1.horizontalEdgesAnchor == container.horizontalEdgesAnchor -- 10
 
 // Insetting each edge separately
-$0.horizontalEdgesAnchor == container.horizontalEdgesAnchor -- (leading: 5, trailing: 15)
+--| $1.horizontalEdgesAnchor == container.horizontalEdgesAnchor -- (leading: 5, trailing: 15)
 ```
 
 #### `verticalEdgesAnchor`
@@ -175,11 +175,11 @@ Modifies both the top and bottom anchors
 ```swift
 
 // Another verticalEdgesAnchor assignment
-$0.verticalEdgesAnchor == container.verticalEdgesAnchor
+--| $1.verticalEdgesAnchor == container.verticalEdgesAnchor
 
 // Insetting all edges equally
-$0.verticalEdgesAnchor == container.verticalEdgesAnchor -- 10
+--| $1.verticalEdgesAnchor == container.verticalEdgesAnchor -- 10
 
 // Insetting each edge separately
-$0.verticalEdgesAnchor == container.verticalEdgesAnchor -- (top: 10, bottom: 20)
+--| $1.verticalEdgesAnchor == container.verticalEdgesAnchor -- (top: 10, bottom: 20)
 ```

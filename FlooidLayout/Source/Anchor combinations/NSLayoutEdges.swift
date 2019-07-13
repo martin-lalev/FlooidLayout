@@ -27,5 +27,5 @@ extension UIView: EdgesAnchorProvider {}
 extension UILayoutGuide: EdgesAnchorProvider {}
 
 public extension EdgesAnchorProvider {
-    var edgesAnchor: NSLayoutEdges { .init(leadingAxisAnchor: self.leadingAnchor, trailingAxisAnchor: self.trailingAnchor, topAxisAnchor: self.topAnchor, bottomAxisAnchor: self.bottomAnchor) }
+    var edgesAnchor: NSLayoutEdges { return .init(leadingAxisAnchor: self.leadingAnchor, trailingAxisAnchor: self.trailingAnchor, topAxisAnchor: self.topAnchor, bottomAxisAnchor: self.bottomAnchor) }
 }

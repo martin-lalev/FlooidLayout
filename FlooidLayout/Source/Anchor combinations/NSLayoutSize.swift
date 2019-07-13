@@ -23,5 +23,5 @@ extension UIView: LayoutSizeProvider {}
 extension UILayoutGuide: LayoutSizeProvider {}
 
 public extension LayoutSizeProvider {
-    var sizeAnchor: NSLayoutSize { .init(widthAnchor: self.widthAnchor, heightAnchor: self.heightAnchor) }
+    var sizeAnchor: NSLayoutSize { return .init(widthAnchor: self.widthAnchor, heightAnchor: self.heightAnchor) }
 }

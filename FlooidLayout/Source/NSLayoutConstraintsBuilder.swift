@@ -18,82 +18,73 @@ public protocol NSLayoutConstraintsAccumulation {
 }
 
 extension NSLayoutConstraint: NSLayoutConstraintsAccumulation {
-    public var asMultipleConstraints: [NSLayoutConstraint] { [self] }
+    public var asMultipleConstraints: [NSLayoutConstraint] { return [self] }
 }
 extension Array: NSLayoutConstraintsAccumulation where Element: NSLayoutConstraint {
-    public var asMultipleConstraints: [NSLayoutConstraint] { self }
+    public var asMultipleConstraints: [NSLayoutConstraint] { return self }
 }
 
 extension NSLayoutEdgeConstraints: NSLayoutConstraintsAccumulation {
-    public var asMultipleConstraints: [NSLayoutConstraint] { [self.leading, self.trailing, self.top, self.bottom] }
+    public var asMultipleConstraints: [NSLayoutConstraint] { return [self.leading, self.trailing, self.top, self.bottom] }
 }
 extension NSLayoutSizeConstraints: NSLayoutConstraintsAccumulation {
-    public var asMultipleConstraints: [NSLayoutConstraint] { [self.width, self.height] }
+    public var asMultipleConstraints: [NSLayoutConstraint] { return [self.width, self.height] }
 }
 extension NSLayoutLocationConstraints: NSLayoutConstraintsAccumulation {
-    public var asMultipleConstraints: [NSLayoutConstraint] { [self.x, self.y] }
+    public var asMultipleConstraints: [NSLayoutConstraint] { return [self.x, self.y] }
 }
 extension NSLayoutXAxisEdgesConstraints: NSLayoutConstraintsAccumulation {
-    public var asMultipleConstraints: [NSLayoutConstraint] { [self.leading, self.trailing] }
+    public var asMultipleConstraints: [NSLayoutConstraint] { return [self.leading, self.trailing] }
 }
 extension NSLayoutYAxisEdgesConstraints: NSLayoutConstraintsAccumulation {
-    public var asMultipleConstraints: [NSLayoutConstraint] { [self.top, self.bottom] }
+    public var asMultipleConstraints: [NSLayoutConstraint] { return [self.top, self.bottom] }
 }
 
 
 
-// Function builder
+// Custom operator
 
-@_functionBuilder
-public struct NSLayoutConstraintsBuilder {
+infix operator --|: LogicalDisjunctionPrecedence
+
+extension Array where Element == NSLayoutConstraint {
     
-    public static func buildBlock(_ components: NSLayoutConstraintsAccumulation ...) -> NSLayoutConstraintsAccumulation {
-        return components.flatMap { $0.asMultipleConstraints }
-    }
-    
-    public static func buildIf(_ component: NSLayoutConstraintsAccumulation?) -> NSLayoutConstraintsAccumulation {
-        return component ?? [NSLayoutConstraint]()
-    }
-    
-    public static func buildEither(first: NSLayoutConstraintsAccumulation) -> NSLayoutConstraintsAccumulation {
-        return first
-    }
-    
-    public static func buildEither(second: NSLayoutConstraintsAccumulation) -> NSLayoutConstraintsAccumulation {
-        return second
+    public static func --| (lpred: [NSLayoutConstraint], rpred: NSLayoutConstraintsAccumulation) -> [NSLayoutConstraint] {
+        var result = Array(lpred)
+        result.append(contentsOf: rpred.asMultipleConstraints)
+        return result
     }
     
 }
 
 
 
-// Function builder usage
+// Custom operator usage
 
 public extension NSLayoutConstraint {
     
-    static func activate(@NSLayoutConstraintsBuilder constraintsBuilder: () -> NSLayoutConstraintsAccumulation) {
-        NSLayoutConstraint.activate(constraintsBuilder().asMultipleConstraints)
+    static func activate(_ constraintsBuilder: ([NSLayoutConstraint]) -> NSLayoutConstraintsAccumulation) {
+        NSLayoutConstraint.activate(constraintsBuilder([]).asMultipleConstraints)
     }
     
-    static func make(@NSLayoutConstraintsBuilder constraintsBuilder: () -> NSLayoutConstraintsAccumulation) -> [NSLayoutConstraint] {
-        return constraintsBuilder().asMultipleConstraints
+    static func make(_ constraintsBuilder: ([NSLayoutConstraint]) -> NSLayoutConstraintsAccumulation) -> [NSLayoutConstraint] {
+        return constraintsBuilder([]).asMultipleConstraints
     }
     
 }
 
 public extension UIView {
     
-    func constraints(@NSLayoutConstraintsBuilder constraintsBuilder: (UIView) -> NSLayoutConstraintsAccumulation) {
+    func constraints(_ constraintsBuilder: ([NSLayoutConstraint], UIView) -> NSLayoutConstraintsAccumulation) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate(constraintsBuilder(self).asMultipleConstraints)
+        NSLayoutConstraint.activate(constraintsBuilder([], self).asMultipleConstraints)
     }
     
 }
 
 public extension UILayoutGuide {
     
-    func constraints(@NSLayoutConstraintsBuilder constraintsBuilder: (UILayoutGuide) -> NSLayoutConstraintsAccumulation) {
-        NSLayoutConstraint.activate(constraintsBuilder(self).asMultipleConstraints)
+    func constraints(_ constraintsBuilder: ([NSLayoutConstraint], UILayoutGuide) -> NSLayoutConstraintsAccumulation) {
+        NSLayoutConstraint.activate(constraintsBuilder([], self).asMultipleConstraints)
     }
     
 }

@@ -23,5 +23,5 @@ extension UIView: LayoutYAxisEdgesProvider {}
 extension UILayoutGuide: LayoutYAxisEdgesProvider {}
 
 public extension LayoutYAxisEdgesProvider {
-    var verticalEdgesAnchor: NSLayoutYAxisEdges { .init(topAxisAnchor: self.topAnchor, bottomAxisAnchor: self.bottomAnchor) }
+    var verticalEdgesAnchor: NSLayoutYAxisEdges { return .init(topAxisAnchor: self.topAnchor, bottomAxisAnchor: self.bottomAnchor) }
 }
