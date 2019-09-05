@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 public struct NSLayoutEdgeConstraints {
-    let leading: NSLayoutConstraint
-    let trailing: NSLayoutConstraint
-    let top: NSLayoutConstraint
-    let bottom: NSLayoutConstraint
+    public let leading: NSLayoutConstraint
+    public let trailing: NSLayoutConstraint
+    public let top: NSLayoutConstraint
+    public let bottom: NSLayoutConstraint
 }
 
 public extension NSLayoutEdges {

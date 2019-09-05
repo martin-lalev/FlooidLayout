@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public struct NSLayoutXAxisEdgesConstraints {
-    let leading: NSLayoutConstraint
-    let trailing: NSLayoutConstraint
+    public let leading: NSLayoutConstraint
+    public let trailing: NSLayoutConstraint
 }
 
 public extension NSLayoutXAxisEdges {
