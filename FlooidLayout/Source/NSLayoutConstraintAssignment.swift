@@ -18,18 +18,27 @@ precedencegroup ConstraintAssignmentPrecedence {
 
 infix operator -->: ConstraintAssignmentPrecedence
 
-extension NSLayoutConstraint {
+public protocol InlineAssignable {}
+
+extension InlineAssignable {
     
     @discardableResult
-    public static func --> (lpred: NSLayoutConstraint, rpred: inout NSLayoutConstraint) -> NSLayoutConstraint {
+    public static func --> (lpred: Self, rpred: inout Self) -> Self {
         rpred = lpred
         return lpred
     }
     
     @discardableResult
-    public static func --> (lpred: NSLayoutConstraint, rpred: inout NSLayoutConstraint?) -> NSLayoutConstraint {
+    public static func --> (lpred: Self, rpred: inout Self?) -> Self {
         rpred = lpred
         return lpred
     }
     
 }
+
+extension NSLayoutConstraint: InlineAssignable {}
+extension NSLayoutSizeConstraints: InlineAssignable {}
+extension NSLayoutLocationConstraints: InlineAssignable {}
+extension NSLayoutEdgeConstraints: InlineAssignable {}
+extension NSLayoutXAxisEdgesConstraints: InlineAssignable {}
+extension NSLayoutYAxisEdgesConstraints: InlineAssignable {}
