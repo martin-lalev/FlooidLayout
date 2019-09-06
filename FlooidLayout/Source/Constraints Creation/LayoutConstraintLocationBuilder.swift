@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public struct NSLayoutLocationConstraints {
-    let x: NSLayoutConstraint
-    let y: NSLayoutConstraint
+    public let x: NSLayoutConstraint
+    public let y: NSLayoutConstraint
 }
 
 public extension NSLayoutLocation {

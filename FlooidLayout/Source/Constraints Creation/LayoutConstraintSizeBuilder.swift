@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public struct NSLayoutSizeConstraints {
-    let width: NSLayoutConstraint
-    let height: NSLayoutConstraint
+    public let width: NSLayoutConstraint
+    public let height: NSLayoutConstraint
 }
 
 public extension NSLayoutSize {

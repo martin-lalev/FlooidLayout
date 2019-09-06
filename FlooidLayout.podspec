@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "FlooidLayout"
-s.version      = "1.0.2.preXcode11"
+s.version      = "1.0.3.preXcode11"
 s.summary      = "Declarative Autolayout Library."
 s.description  = "FloodLayout is an autolayout DSL, which helps you write a more intuitive and expressive code, by using custom operators."
 s.homepage     = "http://github.com/martin-lalev/FlooidLayout"
