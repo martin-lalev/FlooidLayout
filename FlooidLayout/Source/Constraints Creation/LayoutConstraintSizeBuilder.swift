@@ -17,6 +17,21 @@ public struct NSLayoutSizeConstraints {
 public extension NSLayoutSize {
     
     @discardableResult
+    static func == (lhs: NSLayoutSize, rhs: NSLayoutSize) -> NSLayoutSizeConstraints {
+        return .init(width: lhs.widthAnchor == rhs.widthProperties, height: lhs.heightAnchor == rhs.heightProperties)
+    }
+    
+    @discardableResult
+    static func <= (lhs: NSLayoutSize, rhs: NSLayoutSize) -> NSLayoutSizeConstraints {
+        return .init(width: lhs.widthAnchor <= rhs.widthProperties, height: lhs.heightAnchor <= rhs.heightProperties)
+    }
+    
+    @discardableResult
+    static func >= (lhs: NSLayoutSize, rhs: NSLayoutSize) -> NSLayoutSizeConstraints {
+        return .init(width: lhs.widthAnchor >= rhs.widthProperties, height: lhs.heightAnchor >= rhs.heightProperties)
+    }
+    
+    @discardableResult
     static func == (lhs: NSLayoutSize, rhs: SizeConstraintParametersProvider) -> NSLayoutSizeConstraints {
         return .init(width: lhs.widthAnchor == rhs.widthProperties, height: lhs.heightAnchor == rhs.heightProperties)
     }

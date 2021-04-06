@@ -12,6 +12,21 @@ import UIKit
 public extension NSLayoutXAxisAnchor {
     
     @discardableResult
+    static func == (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+        return lhs.constraint(equalTo: rhs.anchor, constant: rhs.constant)
+    }
+    
+    @discardableResult
+    static func <= (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+        return lhs.constraint(lessThanOrEqualTo: rhs.anchor, constant: rhs.constant)
+    }
+    
+    @discardableResult
+    static func >= (lhs: NSLayoutXAxisAnchor, rhs: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+        return lhs.constraint(greaterThanOrEqualTo: rhs.anchor, constant: rhs.constant)
+    }
+    
+    @discardableResult
     static func == (lhs: NSLayoutXAxisAnchor, rhs: XAxisConstraintParametersProvider) -> NSLayoutConstraint {
         return lhs.constraint(equalTo: rhs.anchor, constant: rhs.constant)
     }

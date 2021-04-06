@@ -17,6 +17,11 @@ public struct NSLayoutXAxisEdgesConstraints {
 public extension NSLayoutXAxisEdges {
     
     @discardableResult
+    static func == (lhs: NSLayoutXAxisEdges, rhs: NSLayoutXAxisEdges) -> NSLayoutXAxisEdgesConstraints {
+        return .init(leading: lhs.leadingAxisAnchor == rhs.leadingProperties, trailing: lhs.trailingAxisAnchor == rhs.trailingProperties)
+    }
+    
+    @discardableResult
     static func == (lhs: NSLayoutXAxisEdges, rhs: XAxisEdgesConstraintParametersProvider) -> NSLayoutXAxisEdgesConstraints {
         return .init(leading: lhs.leadingAxisAnchor == rhs.leadingProperties, trailing: lhs.trailingAxisAnchor == rhs.trailingProperties)
     }

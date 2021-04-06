@@ -12,6 +12,21 @@ import UIKit
 public extension NSLayoutDimension {
     
     @discardableResult
+    static func == (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
+        return lhs.constraint(equalTo: rhs.anchor, multiplier: rhs.multiplyer, constant: rhs.constant)
+    }
+    
+    @discardableResult
+    static func <= (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
+        return lhs.constraint(lessThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplyer, constant: rhs.constant)
+    }
+    
+    @discardableResult
+    static func >= (lhs: NSLayoutDimension, rhs: NSLayoutDimension) -> NSLayoutConstraint {
+        return lhs.constraint(greaterThanOrEqualTo: rhs.anchor, multiplier: rhs.multiplyer, constant: rhs.constant)
+    }
+    
+    @discardableResult
     static func == (lhs: NSLayoutDimension, rhs: DimensionConstraintParametersProvider) -> NSLayoutConstraint {
         return lhs.constraint(equalTo: rhs.anchor, multiplier: rhs.multiplyer, constant: rhs.constant)
     }

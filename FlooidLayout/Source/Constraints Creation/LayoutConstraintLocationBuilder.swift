@@ -17,6 +17,21 @@ public struct NSLayoutLocationConstraints {
 public extension NSLayoutLocation {
     
     @discardableResult
+    static func == (lhs: NSLayoutLocation, rhs: NSLayoutLocation) -> NSLayoutLocationConstraints {
+        return .init(x: lhs.xAxisAnchor == rhs.xAxisProperties, y: lhs.yAxisAnchor == rhs.yAxisProperties)
+    }
+    
+    @discardableResult
+    static func <= (lhs: NSLayoutLocation, rhs: NSLayoutLocation) -> NSLayoutLocationConstraints {
+        return .init(x: lhs.xAxisAnchor <= rhs.xAxisProperties, y: lhs.yAxisAnchor <= rhs.yAxisProperties)
+    }
+    
+    @discardableResult
+    static func >= (lhs: NSLayoutLocation, rhs: NSLayoutLocation) -> NSLayoutLocationConstraints {
+        return .init(x: lhs.xAxisAnchor >= rhs.xAxisProperties, y: lhs.yAxisAnchor >= rhs.yAxisProperties)
+    }
+    
+    @discardableResult
     static func == (lhs: NSLayoutLocation, rhs: LocationConstraintParametersProvider) -> NSLayoutLocationConstraints {
         return .init(x: lhs.xAxisAnchor == rhs.xAxisProperties, y: lhs.yAxisAnchor == rhs.yAxisProperties)
     }
