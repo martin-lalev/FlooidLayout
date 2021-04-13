@@ -1,6 +1,6 @@
 # FlooidLayout
 
-FloodLayout is an autolayout DSL, which helps you write a more intuitive and expressive code, by using custom operators and the new Swift 5.1 function builders. For example, the following standard autolayout code:
+FloodLayout is a Swift DSL, which helps you write autolayout code in a more intuitive way. For example, the following code snippet:
 
 ```swift
 NSLayoutConstraint.activate([
@@ -11,14 +11,14 @@ NSLayoutConstraint.activate([
 ])
 ```
 
-could be written as:
+could be rewritten as:
 
 ```swift
-image.constraints {
-    $0.centerXAnchor == container.centerXAnchor
-    $0.topAnchor == container.topAnchor + 20
-    $0.widthAnchor == container.widthAnchor -- 20
-    $0.heightAnchor == $0.widthAnchor * 0.6
+image.constraints { view in
+    view.centerXAnchor == container.centerXAnchor
+    view.topAnchor == container.topAnchor + 20
+    view.widthAnchor == container.widthAnchor -- 20
+    view.heightAnchor == view.widthAnchor * 0.6
 }
 ```
 ## Installation
@@ -28,27 +28,32 @@ image.constraints {
 Add the following line to your Podfile:
 
 ```
-pod 'FlooidLayout', '~> 1.0.2'
+pod 'FlooidLayout', '~> 1.0.4'
 ```
 
 ### Swift Package Manager
 
-Add the following dependency to your Package.swift (or use the url and version rule below when integrating via Xcode 11):
+Add the following dependency to your Package.swift:
 
 ```
-.package(url: "https://github.com/martin-lalev/FlooidLayout.git", .upToNextMajor(from: "1.0.2"))
+.package(url: "https://github.com/martin-lalev/FlooidLayout.git", .upToNextMajor(from: "1.0.4"))
 ```
 
 ## How it works
 
-FlooidLayout builds `NSLayoutConstraint` using the `==`, `<=`, or the `>=` operators with the base anchor on the left hand side and a layout expression on the right hand side. The layout expresion may be just a constant (if the lhs is a dimension anchor), or a combination of another anchor, an optional multiplier (`* <multiplier value>`) and an optional constant (`+/- <constant value>`).
-> Width and height anchors can also have their constants assigned with `++` or `--` which just multiplies the constant value by 2. This is useful when you want to express some sort of padding or margin on both sides.
+Building `NSLayoutConstraint`s is done by assigning _layout expressions_ to `NSLayoutAnchor` objects via custom equality operators (`==`, `<=`, or `>=`). The syntax for the _layout expresions_ is:
+* simple constant, for width and height anchors (e.g. `view.heightAnchor == 50`) 
+* anchor (e.g. `view.leadingAnchor == container.centerXAnchor`)
+* anchor with multiplier (e.g. `view.widthAnchor <= container.widthAnchor * 0.8`)
+* anchor with constant (e.g. `view.leadingAnchor == thumbnail.trailingAnchor + 15`)
+* anchor with multiplier and constant (e.g. `view.heightAnchor == container.heightAnchor * 0.8 - 10`)
+> Width and height anchors can also have their constants assigned with `++` or `--` which just multiplies the value by 2. This is useful when you want to express paddings or margins on a view. E.g: `view.widthAnchor == container.widthAnchor -- 10` - this adds a margin of 10pt on the left and right and is equivalent to `view.widthAnchor == container.widthAnchor - 20`.
 
-To make layout construction even easier, all `UIView`s and `UILayoutGuide`s have a `constraints` helper method which takes a function builder closure. The closure has only one parameter - the object the `constraints` method was called on. This way, you can group related constraints into a single block of code.
+`FlooidLayout` also provides a result builder which generates a list of `NSLayoutConstraint`s. To use this resut builder, you can call the `constraints` method of  `UIView` (or `UILayoutGuide`) which would also activate the generated list of constraints.
 
 ## Modifications and variable assignment
 
-FlooidLayout allows you to perform inline changes on some of the constraint properties as well as store the constraint in a variable, thus keeping the declarative nature of your autolayout code.
+FlooidLayout allows you to perform inline changes on some of the constraint properties as well as store the constraint in a variable, thus maintaining the declarative nature of your autolayout code.
 
 #### Assigning custom priority
 
@@ -67,7 +72,7 @@ $0.centerXAnchor == container.centerXAnchor --! .identifier("iconCenterX")
 ```swift
 icon.centerXAnchor == container.centerXAnchor --! .activated
 ```
-> Should be used only if you are declaring a constraint outside of the `constraints` method, since it will automatically activate all constraints in the function builder block.
+> Should be used only if you are declaring a constraint outside of the `constraints` method. `constraints` will automatically activate all constraints in the function builder block.
 
 #### Store in a vairable
 
@@ -77,7 +82,7 @@ $0.topAnchor == container.topAnchor + 20 --> imageTopConstraint
 
 #### Chaining
 
-All of the above can be chained together with the only restriction being that the assignment should be at the end of the declaration:
+All of the modifiers can be chained together with the only rule being that the assignment is at the end:
 
 ```swift
 $0.heightAnchor == $0.widthAnchor * 0.6 --! .priority(.defaultHigh) --! .identifier("iconHeight") --> iconHeightConstraint
