@@ -1,10 +1,10 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
     name: "FlooidLayout",
-    platforms: [.iOS(.v11)],
+    platforms: [.iOS(.v13)],
     products: [
         .library(
             name: "FlooidLayout",
@@ -15,6 +15,7 @@ let package = Package(
     targets: [
         .target(
             name: "FlooidLayout",
-            path: "FlooidLayout"),
+            path: "FlooidLayout/Source"
+        ),
     ]
 )
