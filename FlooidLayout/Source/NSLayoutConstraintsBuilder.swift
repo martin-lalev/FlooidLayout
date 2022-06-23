@@ -44,7 +44,7 @@ extension NSLayoutYAxisEdgesConstraints: NSLayoutConstraintsAccumulation {
 
 // Function builder
 
-@_functionBuilder
+@resultBuilder
 public struct NSLayoutConstraintsBuilder {
     
     public static func buildBlock(_ components: NSLayoutConstraintsAccumulation ...) -> NSLayoutConstraintsAccumulation {
