@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
 
 s.name         = "FlooidLayout"
-s.version      = "1.0.6"
+s.version      = "1.0.7"
 s.summary      = "Declarative Autolayout Library."
-s.description  = "FloodLayout is an autolayout DSL, which helps you write a more intuitive and expressive code, by using custom operators and the new Swift 5.1 function builders."
+s.description  = "FloodLayout is an autolayout DSL, which helps you write a more intuitive and expressive code, by using custom operators and result builders."
 s.homepage     = "http://github.com/martin-lalev/FlooidLayout"
 s.license      = "MIT"
 s.author       = "Martin Lalev"
