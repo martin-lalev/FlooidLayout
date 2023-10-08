@@ -24,13 +24,13 @@ image.constraints { view in
 ### Cocoapods
 
 ```
-pod 'FlooidLayout', '~> 1.0.7'
+pod 'FlooidLayout', '~> 1.0.8'
 ```
 
 ### Swift Package Manager
 
 ```
-.package(url: "https://github.com/martin-lalev/FlooidLayout", from: "1.0.7")
+.package(url: "https://github.com/martin-lalev/FlooidLayout", from: "1.0.8")
 ```
 
 ## How it works
