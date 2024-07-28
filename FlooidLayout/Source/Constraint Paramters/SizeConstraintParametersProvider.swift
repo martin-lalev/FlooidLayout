@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+@MainActor
 public protocol SizeConstraintParametersProvider {
     var widthProperties: DimensionConstraintParametersProvider { get }
     var heightProperties: DimensionConstraintParametersProvider { get }
@@ -34,13 +35,23 @@ extension SizeConstraintParametersProvider {
     func scale(by value: CGFloat) -> SizeConstraintParameters { return self.scale(width: value, height: value) }
 }
 
+@MainActor
 public func + (lhs: SizeConstraintParametersProvider, rhs: CGFloat) -> SizeConstraintParameters { return lhs.expand(by: rhs) }
+@MainActor
 public func - (lhs: SizeConstraintParametersProvider, rhs: CGFloat) -> SizeConstraintParameters { return lhs.expand(by: -rhs) }
+@MainActor
 public func ++ (lhs: SizeConstraintParametersProvider, rhs: CGFloat) -> SizeConstraintParameters { return lhs.expand(by: 2*rhs) }
+@MainActor
 public func -- (lhs: SizeConstraintParametersProvider, rhs: CGFloat) -> SizeConstraintParameters { return lhs.expand(by: -2*rhs) }
+@MainActor
 public func * (lhs: SizeConstraintParametersProvider, rhs: CGFloat) -> SizeConstraintParameters { return lhs.scale(by: rhs) }
+@MainActor
 public func + (lhs: SizeConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> SizeConstraintParameters { return lhs.expand(width: rhs.0, height: rhs.1) }
+@MainActor
 public func - (lhs: SizeConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> SizeConstraintParameters { return lhs.expand(width: -rhs.0, height: -rhs.1) }
+@MainActor
 public func ++ (lhs: SizeConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> SizeConstraintParameters { return lhs.expand(width: 2*rhs.0, height: 2*rhs.1) }
+@MainActor
 public func -- (lhs: SizeConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> SizeConstraintParameters { return lhs.expand(width: -2*rhs.0, height: -2*rhs.1) }
+@MainActor
 public func * (lhs: SizeConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> SizeConstraintParameters { return lhs.scale(width: rhs.0, height: rhs.1) }

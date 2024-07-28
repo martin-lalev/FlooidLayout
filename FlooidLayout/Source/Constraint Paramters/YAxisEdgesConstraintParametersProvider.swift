@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+@MainActor
 public protocol YAxisEdgesConstraintParametersProvider {
     var topProperties: YAxisConstraintParametersProvider { get }
     var bottomProperties: YAxisConstraintParametersProvider { get }
@@ -32,7 +33,11 @@ extension YAxisEdgesConstraintParametersProvider {
     func expand(by value: CGFloat) -> YAxisEdgesConstraintParameters { return self.expand(top: value, bottom: value) }
 }
 
+@MainActor
 public func ++ (lhs: YAxisEdgesConstraintParametersProvider, rhs: CGFloat) -> YAxisEdgesConstraintParameters { return lhs.expand(by: rhs) }
+@MainActor
 public func -- (lhs: YAxisEdgesConstraintParametersProvider, rhs: CGFloat) -> YAxisEdgesConstraintParameters { return lhs.expand(by: -rhs) }
+@MainActor
 public func ++ (lhs: YAxisEdgesConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> YAxisEdgesConstraintParameters { return lhs.expand(top: rhs.0, bottom: rhs.1) }
+@MainActor
 public func -- (lhs: YAxisEdgesConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> YAxisEdgesConstraintParameters { return lhs.expand(top: -rhs.0, bottom: -rhs.1) }

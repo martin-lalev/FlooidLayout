@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 
+@MainActor
 public struct NSLayoutYAxisEdges {
     let topAxisAnchor: NSLayoutYAxisAnchor
     let bottomAxisAnchor: NSLayoutYAxisAnchor
 }
 
 
+@MainActor
 public protocol LayoutYAxisEdgesProvider {
     var topAnchor: NSLayoutYAxisAnchor { get }
     var bottomAnchor: NSLayoutYAxisAnchor { get }

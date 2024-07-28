@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 
+@MainActor
 public struct NSLayoutLocation {
     let xAxisAnchor: NSLayoutXAxisAnchor
     let yAxisAnchor: NSLayoutYAxisAnchor
 }
 
 
+@MainActor
 public protocol LayoutLocationProvider {
     var centerXAnchor: NSLayoutXAxisAnchor { get }
     var leadingAnchor: NSLayoutXAxisAnchor { get }

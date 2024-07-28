@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+@MainActor
 public protocol EdgesConstraintParametersProvider {
     var leadingProperties: XAxisConstraintParametersProvider { get }
     var trailingProperties: XAxisConstraintParametersProvider { get }
@@ -49,11 +50,19 @@ extension EdgesConstraintParametersProvider {
     func inset(by value: CGFloat) -> EdgesConstraintParameters { return self.expand(by: -value) }
 }
 
+@MainActor
 public func ++ (lhs: EdgesConstraintParameters, rhs: CGFloat) -> EdgesConstraintParameters { return lhs.expand(by: rhs) }
+@MainActor
 public func -- (lhs: EdgesConstraintParameters, rhs: CGFloat) -> EdgesConstraintParameters { return lhs.expand(by: -rhs) }
+@MainActor
 public func ++ (lhs: EdgesConstraintParameters, rhs: (CGFloat,CGFloat)) -> EdgesConstraintParameters { return lhs.expand(horizontally: rhs.0, vertically: rhs.1) }
+@MainActor
 public func -- (lhs: EdgesConstraintParameters, rhs: (CGFloat,CGFloat)) -> EdgesConstraintParameters { return lhs.expand(horizontally: -rhs.0, vertically: -rhs.1) }
+@MainActor
 public func ++ (lhs: EdgesConstraintParameters, rhs: (CGFloat,CGFloat,CGFloat,CGFloat)) -> EdgesConstraintParameters { return lhs.expand(leading: rhs.0, trailing: rhs.1, top: rhs.2, bottom: rhs.3) }
+@MainActor
 public func -- (lhs: EdgesConstraintParameters, rhs: (CGFloat,CGFloat,CGFloat,CGFloat)) -> EdgesConstraintParameters { return lhs.expand(leading: -rhs.0, trailing: -rhs.1, top: rhs.2, bottom: rhs.3) }
+@MainActor
 public func ++ (lhs: EdgesConstraintParameters, rhs: NSDirectionalEdgeInsets) -> EdgesConstraintParameters { return lhs.expand(leading: rhs.leading, trailing: rhs.trailing, top: rhs.top, bottom: rhs.bottom) }
+@MainActor
 public func -- (lhs: EdgesConstraintParameters, rhs: NSDirectionalEdgeInsets) -> EdgesConstraintParameters { return lhs.expand(leading: -rhs.leading, trailing: -rhs.trailing, top: rhs.top, bottom: rhs.bottom) }

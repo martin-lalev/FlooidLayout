@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+@MainActor
 public protocol DimensionConstraintParametersProvider {
     var anchor: NSLayoutDimension { get }
     var constant: CGFloat { get }
@@ -38,8 +39,13 @@ extension DimensionConstraintParametersProvider {
     func scale(by value: CGFloat) -> DimensionConstraintParameters { return .init(anchor: self.anchor, constant: self.constant, multiplyer: value) }
 }
 
+@MainActor
 public func + (lhs: DimensionConstraintParametersProvider, rhs: CGFloat) -> DimensionConstraintParameters { return lhs.expand(by: rhs) }
+@MainActor
 public func ++ (lhs: DimensionConstraintParametersProvider, rhs: CGFloat) -> DimensionConstraintParameters { return lhs.expand(by: 2*rhs) }
+@MainActor
 public func - (lhs: DimensionConstraintParametersProvider, rhs: CGFloat) -> DimensionConstraintParameters { return lhs.expand(by: -rhs) }
+@MainActor
 public func -- (lhs: DimensionConstraintParametersProvider, rhs: CGFloat) -> DimensionConstraintParameters { return lhs.expand(by: -2*rhs) }
+@MainActor
 public func * (lhs: DimensionConstraintParametersProvider, rhs: CGFloat) -> DimensionConstraintParameters { return lhs.scale(by: rhs) }

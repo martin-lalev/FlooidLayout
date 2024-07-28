@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 
+@MainActor
 public struct NSLayoutSize {
     let widthAnchor: NSLayoutDimension
     let heightAnchor: NSLayoutDimension
 }
 
 
+@MainActor
 public protocol LayoutSizeProvider {
     var widthAnchor: NSLayoutDimension { get }
     var heightAnchor: NSLayoutDimension { get }

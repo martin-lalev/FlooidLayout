@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+@MainActor
 public protocol YAxisConstraintParametersProvider {
     var anchor: NSLayoutYAxisAnchor { get }
     var constant: CGFloat { get }
@@ -31,5 +32,7 @@ extension YAxisConstraintParametersProvider {
     func move(by value: CGFloat) -> YAxisConstraintParameters { return .init(anchor: self.anchor, constant: value) }
 }
 
+@MainActor
 public func + (lhs: YAxisConstraintParametersProvider, rhs: CGFloat) -> YAxisConstraintParameters { return lhs.move(by: rhs) }
+@MainActor
 public func - (lhs: YAxisConstraintParametersProvider, rhs: CGFloat) -> YAxisConstraintParameters { return lhs.move(by: -rhs) }

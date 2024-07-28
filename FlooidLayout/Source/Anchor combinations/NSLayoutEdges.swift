@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 public struct NSLayoutEdges {
     let leadingAxisAnchor: NSLayoutXAxisAnchor
     let trailingAxisAnchor: NSLayoutXAxisAnchor
@@ -17,6 +18,7 @@ public struct NSLayoutEdges {
 }
 
 
+@MainActor
 public protocol EdgesAnchorProvider {
     var leadingAnchor: NSLayoutXAxisAnchor { get }
     var trailingAnchor: NSLayoutXAxisAnchor { get }

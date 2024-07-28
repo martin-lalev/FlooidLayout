@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+@MainActor
 public protocol LocationConstraintParametersProvider {
     var xAxisProperties: XAxisConstraintParametersProvider { get }
     var yAxisProperties: YAxisConstraintParametersProvider { get }
@@ -32,7 +33,11 @@ extension LocationConstraintParametersProvider {
     func move(by value: CGFloat) -> LocationConstraintParameters { return self.move(horizontally: value, vertically: value) }
 }
 
+@MainActor
 public func + (lhs: LocationConstraintParametersProvider, rhs: CGFloat) -> LocationConstraintParameters { return lhs.move(by: rhs) }
+@MainActor
 public func - (lhs: LocationConstraintParametersProvider, rhs: CGFloat) -> LocationConstraintParameters { return lhs.move(by: -rhs) }
+@MainActor
 public func + (lhs: LocationConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> LocationConstraintParameters { return lhs.move(horizontally: rhs.0, vertically: rhs.1) }
+@MainActor
 public func - (lhs: LocationConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> LocationConstraintParameters { return lhs.move(horizontally: -rhs.0, vertically: -rhs.1) }

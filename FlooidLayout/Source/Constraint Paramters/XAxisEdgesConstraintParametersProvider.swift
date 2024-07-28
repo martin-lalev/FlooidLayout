@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 
+@MainActor
 public protocol XAxisEdgesConstraintParametersProvider {
     var leadingProperties: XAxisConstraintParametersProvider { get }
     var trailingProperties: XAxisConstraintParametersProvider { get }
@@ -32,7 +33,11 @@ extension XAxisEdgesConstraintParametersProvider {
     func expand(by value: CGFloat) -> XAxisEdgesConstraintParameters { return self.expand(leading: value, trailing: value) }
 }
 
+@MainActor
 public func ++ (lhs: XAxisEdgesConstraintParametersProvider, rhs: CGFloat) -> XAxisEdgesConstraintParameters { return lhs.expand(by: rhs) }
+@MainActor
 public func -- (lhs: XAxisEdgesConstraintParametersProvider, rhs: CGFloat) -> XAxisEdgesConstraintParameters { return lhs.expand(by: -rhs) }
+@MainActor
 public func ++ (lhs: XAxisEdgesConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> XAxisEdgesConstraintParameters { return lhs.expand(leading: rhs.0, trailing: rhs.1) }
+@MainActor
 public func -- (lhs: XAxisEdgesConstraintParametersProvider, rhs: (CGFloat,CGFloat)) -> XAxisEdgesConstraintParameters { return lhs.expand(leading: -rhs.0, trailing: -rhs.1) }

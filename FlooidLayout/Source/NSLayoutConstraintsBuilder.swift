@@ -13,6 +13,7 @@ import UIKit
 
 // Function builder helper type
 
+@MainActor
 public protocol NSLayoutConstraintsAccumulation {
     var asMultipleConstraints: [NSLayoutConstraint] { get }
 }
@@ -44,6 +45,7 @@ extension NSLayoutYAxisEdgesConstraints: NSLayoutConstraintsAccumulation {
 
 // Function builder
 
+@MainActor
 @resultBuilder
 public struct NSLayoutConstraintsBuilder {
     
